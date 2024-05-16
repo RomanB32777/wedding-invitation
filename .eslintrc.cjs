@@ -1,18 +1,56 @@
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
-  rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-  },
-}
+	root: true,
+	env: { browser: true, es2020: true },
+	extends: [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react/recommended",
+		"plugin:react-hooks/recommended",
+		"plugin:jsx-a11y/recommended",
+		"plugin:prettier/recommended",
+		"plugin:@conarti/feature-sliced/recommended",
+		"plugin:@conarti/feature-sliced/import-order/with-newlines-and-type-group",
+		"eslint-config-prettier",
+	],
+	ignorePatterns: ["dist", ".eslintrc.cjs", "commitlint.config.cjs", "src/vite-env.d.ts"],
+	parser: "@typescript-eslint/parser",
+	plugins: ["react-refresh"],
+	rules: {
+		"react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+		"no-shadow": "off",
+		"@typescript-eslint/no-shadow": "warn",
+		"react/react-in-jsx-scope": "off",
+		"prettier/prettier": ["warn"],
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "error",
+		"import/no-cycle": ["error", { ignoreExternal: true, maxDepth: 1 }],
+		"import/no-duplicates": ["error", { "prefer-inline": true }],
+		"import/no-unresolved": "off",
+		"@typescript-eslint/naming-convention": [
+			"error",
+			{
+				prefix: ["I"],
+				selector: "interface",
+				format: ["PascalCase"],
+			},
+			{
+				prefix: ["E"],
+				selector: "enum",
+				format: ["PascalCase"],
+			},
+			{
+				prefix: ["T"],
+				selector: "typeAlias",
+				format: ["PascalCase"],
+			},
+			{
+				selector: "variable",
+				format: ["camelCase", "PascalCase", "UPPER_CASE"],
+			},
+			{
+				selector: "enumMember",
+				format: ["PascalCase"],
+			},
+		],
+	},
+};
