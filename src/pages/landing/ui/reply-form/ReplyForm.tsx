@@ -1,12 +1,44 @@
 import { useMutation } from "@tanstack/react-query";
+import classNames from "classnames";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { IFormReply, sendReply } from "@/shared/api";
+import { TFormReplyFields } from "@/shared/api/model/types";
+import { TComponentWithClassName } from "@/shared/types";
+import { Button, Title } from "@/shared/ui";
 
-import { IGuestNumProp } from "../../model/types";
+import { IFormReplyQuestion, IGuestNumProp } from "../../model/types";
 
-export const ReplyForm: FC<IGuestNumProp> = ({ guestsNum }) => {
+const formQuestions: Record<Exclude<TFormReplyFields, "row">, IFormReplyQuestion> = {
+	presence: {
+		title: "Сможете ли вы присутствовать на нашем торжестве?",
+		type: "radio",
+		options: [
+			"С удовольствием приду (6 и 7 июля)",
+			"Смогу прийти только 6 июля",
+			"К сожалению, не смогу присутствовать",
+			"Сообщу позже",
+		],
+	},
+	drink: {
+		title: "Что предпочитаете из напитков? (возможно отметить несколько вариантов)",
+		type: "checkbox",
+		options: [
+			"Шампанское",
+			"Белое вино",
+			"Красное вино",
+			"Водка",
+			"Виски",
+			"Джин",
+			"Не пью алкоголь",
+		],
+	},
+};
+
+type TReplyForm = IGuestNumProp & TComponentWithClassName;
+
+export const ReplyForm: FC<TReplyForm> = ({ guestsNum, className }) => {
 	const { mutateAsync, isPending } = useMutation({
 		mutationFn: sendReply,
 	});
@@ -15,10 +47,8 @@ export const ReplyForm: FC<IGuestNumProp> = ({ guestsNum }) => {
 		reset,
 		handleSubmit,
 		register,
-		// formState: { isLoading },
-	} = useForm<IFormReply>({ disabled: isPending, mode: "onChange" });
-
-	// isLoading, isSuccess, error
+		formState: { isValid },
+	} = useForm<IFormReply>({ disabled: isPending });
 
 	const submitHandler: SubmitHandler<IFormReply> = async (formData) => {
 		await mutateAsync({ ...formData, row: guestsNum });
@@ -26,145 +56,59 @@ export const ReplyForm: FC<IGuestNumProp> = ({ guestsNum }) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(submitHandler)}>
-			<div>
-				<label htmlFor="field-rain">
-					<input {...register("presence")} type="radio" value="rain" id="field-rain" />
-					Rain
-				</label>
-				<label htmlFor="field-wind">
-					<input {...register("presence")} type="radio" value="wind" id="field-wind" />
-					Lots of wind
-				</label>
-				<label htmlFor="field-sun">
-					<input {...register("presence")} type="radio" value="sun" id="field-sun" />
-					Sunny
-				</label>
-			</div>
+		<div className={classNames("text-white", className)}>
+			<Title text="Анкета" style="white" />
 
-			<fieldset>
-				<legend className="text-sm font-semibold leading-6 text-gray-900">
-					Push Notifications
-				</legend>
-				<p className="mt-1 text-sm leading-6 text-gray-600">
-					These are delivered via SMS to your mobile phone.
+			<p className="font-light">
+				Просим подтвердить ваше присутствие
+				<br />
+				<span className="font-normal">до 10 июня</span>
+			</p>
+
+			<form className="bg-white text-black p-6 my-6" onSubmit={handleSubmit(submitHandler)}>
+				<div className="divide-y divide-primary-light">
+					{Object.entries(formQuestions).map(([field, { title, type, options }]) => (
+						<div key={field} className="pb-6 [&:not(:first-child)]:pt-6">
+							<legend className="text-base font-medium mb-4">{title}</legend>
+
+							<div className="space-y-3">
+								{options.map((option, index) => (
+									<div key={index} className="flex items-center gap-x-3">
+										<input
+											{...register(field as TFormReplyFields, { required: true })}
+											type={type}
+											value={option}
+											id={`${field}-${index}`}
+											name={field}
+											className="h-4 w-4 accent-secondary text-secondary focus:ring-0 focus-visible:ring-0"
+										/>
+
+										<label htmlFor={`${field}-${index}`} className="block text-base font-light">
+											{option}
+										</label>
+									</div>
+								))}
+							</div>
+						</div>
+					))}
+				</div>
+
+				<Button disabled={!isValid || isPending} type="submit">
+					Отправить
+				</Button>
+			</form>
+
+			<Title text="Контакты" style="white" />
+
+			<div className="flex flex-col gap-y-3 text-base">
+				<p className="font-light">По всем вопросам можно обращаться к нашему организатору</p>
+				<p className="font-medium">
+					Жанна,{" "}
+					<a href="tel:+7 903 472-86-23" className="no-underline">
+						+7 903 472-86-23
+					</a>
 				</p>
-				<div className="mt-6 space-y-6">
-					<div className="flex items-center gap-x-3">
-						<input
-							id="push-everything"
-							name="push-notifications"
-							type="radio"
-							className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-						/>
-						<label
-							htmlFor="push-everything"
-							className="block text-sm font-medium leading-6 text-gray-900"
-						>
-							Everything
-						</label>
-					</div>
-					<div className="flex items-center gap-x-3">
-						<input
-							id="push-email"
-							name="push-notifications"
-							type="radio"
-							className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-						/>
-						<label
-							htmlFor="push-email"
-							className="block text-sm font-medium leading-6 text-gray-900"
-						>
-							Same as email
-						</label>
-					</div>
-					<div className="flex items-center gap-x-3">
-						<input
-							id="push-nothing"
-							name="push-notifications"
-							type="radio"
-							className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-						/>
-						<label
-							htmlFor="push-nothing"
-							className="block text-sm font-medium leading-6 text-gray-900"
-						>
-							No push notifications
-						</label>
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend className="text-sm font-semibold leading-6 text-gray-900">By Email</legend>
-				<div className="mt-6 space-y-6">
-					<div className="relative flex gap-x-3">
-						<div className="flex h-6 items-center">
-							<input
-								id="comments"
-								name="comments"
-								type="checkbox"
-								className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-							/>
-						</div>
-						<div className="text-sm leading-6">
-							<label htmlFor="comments" className="font-medium text-gray-900">
-								Comments
-							</label>
-							<p className="text-gray-500">
-								Get notified when someones posts a comment on a posting.
-							</p>
-						</div>
-					</div>
-					<div className="relative flex gap-x-3">
-						<div className="flex h-6 items-center">
-							<input
-								id="candidates"
-								name="candidates"
-								type="checkbox"
-								className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-							/>
-						</div>
-						<div className="text-sm leading-6">
-							<label htmlFor="candidates" className="font-medium text-gray-900">
-								Candidates
-							</label>
-							<p className="text-gray-500">Get notified when a candidate applies for a job.</p>
-						</div>
-					</div>
-					<div className="relative flex gap-x-3">
-						<div className="flex h-6 items-center">
-							<input
-								id="offers"
-								name="offers"
-								type="checkbox"
-								className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-							/>
-						</div>
-						<div className="text-sm leading-6">
-							<label htmlFor="offers" className="font-medium text-gray-900">
-								Offers
-							</label>
-							<p className="text-gray-500">
-								Get notified when a candidate accepts or rejects an offer.
-							</p>
-						</div>
-					</div>
-				</div>
-			</fieldset>
-
-			<div>
-				<label htmlFor="field-lol">
-					<input {...register("drink")} type="checkbox" value="test1" id="field-lol" />
-					Lol
-				</label>
-				<label htmlFor="field-lol2">
-					<input {...register("drink")} type="checkbox" value="test2" id="field-lol2" />
-					Lol2
-				</label>
 			</div>
-
-			<button type="submit">Send</button>
-		</form>
+		</div>
 	);
 };

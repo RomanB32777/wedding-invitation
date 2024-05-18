@@ -1,8 +1,12 @@
+import classNames from "classnames";
+
 import type { FC } from "react";
+
+import { TComponentWithClassName } from "../../types";
 
 type TStyleTypes = "secondary" | "white";
 
-interface ITitle {
+interface ITitle extends TComponentWithClassName {
 	text: string;
 	style?: TStyleTypes;
 }
@@ -12,9 +16,14 @@ const styleClasses: Record<TStyleTypes, string> = {
 	white: "text-white",
 };
 
-export const Title: FC<ITitle> = ({ text, style = "secondary" }) => (
-	<h3 className={styleClasses[style]}>
-		<span className="font-caravan text-8xl">{text[0]}</span>
-		<span className="font-oranienbaum text-2xl uppercase">{text.slice(1)}</span>
+export const Title: FC<ITitle> = ({ text, style = "secondary", className }) => (
+	<h3
+		className={classNames(
+			"first-letter:text-8xl first-letter:font-caravan first-line:uppercase first-line:font-oranienbaum first-line:text-2xl ",
+			styleClasses[style],
+			className
+		)}
+	>
+		{text}
 	</h3>
 );

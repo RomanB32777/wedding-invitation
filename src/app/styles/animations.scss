@@ -1,0 +1,172 @@
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translate3d(50px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-50px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translate3d(50px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -50px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes grow-y-height {
+  from {
+    height: 0;
+  }
+}
+
+@keyframes grow-x-width {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes grow-y-height {
+  from {
+    height: 0;
+  }
+}
+
+@mixin fade-in-left {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: fade-in-left;
+}
+
+@mixin fade-in {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-name: fade-in;
+}
+
+@mixin fade-in-right {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: fade-in-right;
+}
+
+@mixin fade-in-up {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: fade-in-up;
+}
+
+@mixin fade-in-down {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: fade-in-down;
+}
+
+@mixin zoom-in {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: zoom-in;
+}
+
+@mixin gx {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: grow-x;
+  transform-origin: 100% 0%;
+}
+
+@mixin gy {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: grow-y;
+  transform-origin: 0% 100%;
+}
+
+@mixin gw {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: grow-x-width;
+}
+
+@mixin gh {
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-name: grow-y-height;
+}

@@ -13,7 +13,9 @@ export type TSendReplyResponse = IBaseResponse<{
 }>;
 
 export interface IFormReply {
-	row: number;
+	row: string | undefined | null;
 	presence: string;
 	drink: string;
 }
+
+export type TFormReplyFields = keyof IFormReply;
