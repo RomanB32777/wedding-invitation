@@ -1,6 +1,6 @@
 import classNames from "classnames";
-
-import type { FC } from "react";
+import { motion } from "framer-motion";
+import { forwardRef } from "react";
 
 import { TComponentWithClassName } from "../../types";
 
@@ -8,7 +8,7 @@ type TStyleTypes = "secondary" | "white";
 
 interface ITitle extends TComponentWithClassName {
 	text: string;
-	style?: TStyleTypes;
+	type?: TStyleTypes;
 }
 
 const styleClasses: Record<TStyleTypes, string> = {
@@ -16,14 +16,21 @@ const styleClasses: Record<TStyleTypes, string> = {
 	white: "text-white",
 };
 
-export const Title: FC<ITitle> = ({ text, style = "secondary", className }) => (
-	<h3
-		className={classNames(
-			"first-letter:text-8xl first-letter:font-caravan uppercase font-oranienbaum text-2xl ",
-			styleClasses[style],
-			className
-		)}
-	>
-		{text}
-	</h3>
+export const Title = forwardRef<HTMLHeadingElement, ITitle>(
+	({ text, type = "secondary", className }, ref) => (
+		<h3
+			className={classNames(
+				"first-letter:text-8xl first-letter:font-caravan uppercase font-oranienbaum text-2xl",
+				styleClasses[type],
+				className
+			)}
+			ref={ref}
+		>
+			{text}
+		</h3>
+	)
 );
+
+Title.displayName = "Title";
+
+export const MTitle = motion(Title);

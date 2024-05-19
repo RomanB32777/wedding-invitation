@@ -1,24 +1,25 @@
 @import "@/app/styles/index";
 
 .date {
-  &::before,
-  &::after {
-    position: absolute;
-    top: 50%;
-    display: block;
-    width: 35%;
-    height: .5px;
-    background-color: white;
-    content: '';
+	&::before,
+	&::after {
+		position: absolute;
+		top: 50%;
+		display: block;
+		width: 35%;
+		height: 0.5px;
+		animation-delay: 0.3s;
+		background-color: white;
+		content: "";
 
-    @include gw;
-  }
+		@include gw;
+	}
 
-  &::before {
-    left: 0;
-  }
+	&::before {
+		left: 0;
+	}
 
-  &::after {
-    right: 0;
-  }
+	&::after {
+		right: 0;
+	}
 }

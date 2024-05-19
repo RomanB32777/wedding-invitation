@@ -1,2 +1,2 @@
-export { Title } from "./title";
+export { Title, MTitle } from "./title";
 export { Button } from "./button";

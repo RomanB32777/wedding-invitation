@@ -1,1 +1,1 @@
-export { Title } from "./Title";
+export { Title, MTitle } from "./Title";

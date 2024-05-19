@@ -44,8 +44,8 @@ export default {
 				},
 			},
 			animation: {
-				gw: "growXWidth 0.9s both",
-				gh: "growYHeight 0.9s both",
+				gw: "growXWidth 0.5s both",
+				gh: "growYHeight 0.5s both",
 			},
 		},
 	},

@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
+import { motion } from "framer-motion";
 import { FC, useMemo } from "react";
 
 import { fetchGuests } from "@/shared/api";
 import { Icons } from "@/shared/assets/icons";
 import loader from "@/shared/assets/images/loader.gif";
-import { TComponentWithClassName } from "@/shared/types";
-import { Title } from "@/shared/ui";
+import { baseMotionProps, fadeInDirectionAnimation } from "@/shared/constants";
+import { IDirectionAnimation, TComponentWithClassName } from "@/shared/types";
+import { MTitle } from "@/shared/ui";
 
 import { IGuestNumProp } from "../../model/types";
 
@@ -21,7 +23,11 @@ export const Invitation: FC<TInvitation> = ({ guestsNum, className }) => {
 
 	const content = useMemo(() => {
 		if (isLoading) {
-			return <img src={loader} alt="loader" className="w-4/5 mx-auto" />;
+			return (
+				<div className="flex items-center justify-center">
+					<img src={loader} alt="loader" className="w-4/5" />
+				</div>
+			);
 		}
 
 		if (isError) {
@@ -36,21 +42,27 @@ export const Invitation: FC<TInvitation> = ({ guestsNum, className }) => {
 
 		if (data) {
 			return (
-				<>
-					<Title text={data.title || ""} />
+				<motion.div {...baseMotionProps}>
+					<MTitle text={data.title || ""} variants={fadeInDirectionAnimation} />
 
 					<div className="font-light text-base flex flex-col gap-y-3">
-						<p>
+						<motion.p
+							variants={fadeInDirectionAnimation}
+							custom={{ delay: 1 } as IDirectionAnimation}
+						>
 							{data.paragraph}
 							<Icons.HeartSVG className="inline-block ml-1" />
-						</p>
+						</motion.p>
 
-						<p>
+						<motion.p
+							variants={fadeInDirectionAnimation}
+							custom={{ delay: 2 } as IDirectionAnimation}
+						>
 							В этот летний вечер мы будем петь, танцевать, пить tiramisù, обниматься и отмечать
 							один из самых важных дней в нашей жизни вместе.
-						</p>
+						</motion.p>
 					</div>
-				</>
+				</motion.div>
 			);
 		}
 	}, [data, error?.message, isError, isLoading]);

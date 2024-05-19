@@ -1,9 +1,12 @@
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 import { FC, useEffect, useState } from "react";
 
 import footerImg from "@/shared/assets/images/footer.png";
+import { baseMotionProps, fadeInAnimation, fadeInDirectionAnimation } from "@/shared/constants";
 import { getDayjsWeddingDate, relativeTimeWithPlural } from "@/shared/lib/datetime";
-import { Title } from "@/shared/ui";
+import { IDirectionAnimation } from "@/shared/types";
+import { MTitle } from "@/shared/ui";
 
 interface IWeddingDiff {
 	days: string;
@@ -64,37 +67,52 @@ export const Footer: FC = () => {
 	return (
 		<>
 			<div className="relative bg-white px-10 pt-6 pb-60 text-black text-center">
-				<Title text="Ждем вас через" className="mb-4" />
+				<motion.div {...baseMotionProps}>
+					<MTitle text="Ждем вас через" className="mb-4" variants={fadeInAnimation} custom={1} />
 
-				<div className="flex divide-x divide-primary-dark text-primary-dark">
-					{diff &&
-						Object.values(diff).map((item, index) => {
-							// TODO без удаления через тут можно ли обойти, например через конфигурацию dayjs
-							const [value, text] = (item as string).replace("через ", "").split(" ");
+					<motion.div
+						variants={fadeInAnimation}
+						custom={2}
+						className="flex divide-x divide-primary-dark text-primary-dark"
+					>
+						{diff &&
+							Object.values(diff).map((item, index) => {
+								// TODO без удаления через тут можно ли обойти, например через конфигурацию dayjs
+								const [value, text] = (item as string).replace("через ", "").split(" ");
 
-							return (
-								<div className="flex-1" key={index}>
-									<p className="font-oranienbaum text-5xl">{value}</p>
-									<p className="font-light text-base">{text}</p>
-								</div>
-							);
-						})}
-				</div>
+								return (
+									<motion.div
+										variants={fadeInDirectionAnimation}
+										custom={{ axis: "y", delay: 3 + index } as IDirectionAnimation}
+										className="flex-1"
+										key={index}
+									>
+										<p className="font-oranienbaum text-5xl">{value}</p>
+										<p className="font-light text-base">{text}</p>
+									</motion.div>
+								);
+							})}
+					</motion.div>
 
-				<img
-					src={footerImg}
-					alt="Фото"
-					className="absolute top-56 left-1/2 -translate-x-1/2 w-80"
-				/>
+					<motion.img
+						variants={fadeInAnimation}
+						custom={3}
+						src={footerImg}
+						alt="Фото"
+						className="absolute top-56 left-1/2 -translate-x-1/2 w-80"
+					/>
+				</motion.div>
 			</div>
 
-			<div className="pt-32 pb-8">
-				<Title
+			<motion.div {...baseMotionProps} className="pt-32 pb-8">
+				<MTitle
+					variants={fadeInDirectionAnimation}
+					custom={{ axis: "y", delay: 3, direction: 1 } as IDirectionAnimation}
 					text="Ваши Дима и Настя"
-					style="white"
+					type="white"
 					className="relative text-center z-10 first-letter:!text-9xl first-line:!text-3xl"
 				/>
-			</div>
+			</motion.div>
 		</>
 	);
 };
