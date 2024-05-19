@@ -63,10 +63,10 @@ export const Footer: FC = () => {
 
 	return (
 		<>
-			<div className="relative bg-white px-10 pt-6 pb-56 text-black text-center">
+			<div className="relative bg-white px-10 pt-6 pb-60 text-black text-center">
 				<Title text="Ждем вас через" className="mb-4" />
 
-				<div className="flex divide-x divide-primary-dark text-primary-dark ">
+				<div className="flex divide-x divide-primary-dark text-primary-dark">
 					{diff &&
 						Object.values(diff).map((item, index) => {
 							// TODO без удаления через тут можно ли обойти, например через конфигурацию dayjs
@@ -84,7 +84,7 @@ export const Footer: FC = () => {
 				<img
 					src={footerImg}
 					alt="Фото"
-					className="absolute top-60 left-1/2 -translate-x-1/2 w-80"
+					className="absolute top-56 left-1/2 -translate-x-1/2 w-80"
 				/>
 			</div>
 
@@ -92,7 +92,7 @@ export const Footer: FC = () => {
 				<Title
 					text="Ваши Дима и Настя"
 					style="white"
-					className="relative text-center z-10 -top-2 first-letter:!text-9xl first-line:!text-3xl"
+					className="relative text-center z-10 first-letter:!text-9xl first-line:!text-3xl"
 				/>
 			</div>
 		</>
