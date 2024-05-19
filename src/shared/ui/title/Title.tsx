@@ -19,7 +19,7 @@ const styleClasses: Record<TStyleTypes, string> = {
 export const Title: FC<ITitle> = ({ text, style = "secondary", className }) => (
 	<h3
 		className={classNames(
-			"first-letter:text-8xl first-letter:font-caravan first-line:uppercase first-line:font-oranienbaum first-line:text-2xl ",
+			"first-letter:text-8xl first-letter:font-caravan first-line:uppercase first-line:font-oranienbaum first-line:text-3xl ",
 			styleClasses[style],
 			className
 		)}

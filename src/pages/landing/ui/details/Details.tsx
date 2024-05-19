@@ -25,7 +25,7 @@ export const Details: FC<TComponentWithClassName> = ({ className }) => (
 	<div className={classNames("text-white", className)}>
 		<Title text="Детали" style="white" />
 
-		<p className="font-light">
+		<p className="font-light text-base">
 			Будем рады, если вы поддержите цветовую палитру нашей свадьбы в своих нарядах
 		</p>
 
@@ -41,7 +41,7 @@ export const Details: FC<TComponentWithClassName> = ({ className }) => (
 									style={{ backgroundColor: color, borderColor: borderColor || color }}
 									className="w-12 h-12 border"
 								></div>
-								<p className="text-primary-dark font-light text-center"> {name}</p>
+								<p className="text-primary-dark font-light text-base text-center"> {name}</p>
 							</div>
 						))}
 					</div>
@@ -49,6 +49,8 @@ export const Details: FC<TComponentWithClassName> = ({ className }) => (
 			))}
 		</div>
 
-		<p>Пожалуйста, не дарите нам живые цветы. Мы не успеем насладиться их красотой до отъезда</p>
+		<p className="text-base">
+			Пожалуйста, не дарите нам живые цветы. Мы не успеем насладиться их красотой до отъезда
+		</p>
 	</div>
 );

@@ -71,7 +71,7 @@ export const ReplyForm: FC<TReplyForm> = ({ guestsNum, className }) => {
 						<div key={field} className="pb-6 [&:not(:first-child)]:pt-6">
 							<legend className="text-base font-medium mb-4">{title}</legend>
 
-							<div className="space-y-3">
+							<div className="flex flex-col gap-y-3">
 								{options.map((option, index) => (
 									<div key={index} className="flex items-center gap-x-3">
 										<input

@@ -1,3 +1,5 @@
+import { AxiosError } from "axios";
+
 interface IBaseResponse<T extends Record<string, unknown>> {
 	values: T;
 }
@@ -19,3 +21,5 @@ export interface IFormReply {
 }
 
 export type TFormReplyFields = keyof IFormReply;
+
+export type TApiError<Error = unknown> = AxiosError<Error>;

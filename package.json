@@ -37,9 +37,11 @@
 		"canvas-confetti": "^1.9.3",
 		"classnames": "^2.5.1",
 		"dayjs": "^1.11.11",
+		"framer-motion": "^11.2.4",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-hook-form": "^7.51.4"
+		"react-hook-form": "^7.51.4",
+		"react-toastify": "^10.0.5"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.3.0",

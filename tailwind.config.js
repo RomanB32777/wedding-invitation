@@ -8,6 +8,9 @@ export default {
 	content: ["./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			fontSize: {
+				base: ["16px", "20px"],
+			},
 			divideWidth: {
 				DEFAULT: "0.5px",
 			},

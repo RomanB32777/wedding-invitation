@@ -4,6 +4,7 @@ import { FC, useMemo } from "react";
 
 import { fetchGuests } from "@/shared/api";
 import { Icons } from "@/shared/assets/icons";
+import loader from "@/shared/assets/images/loader.gif";
 import { TComponentWithClassName } from "@/shared/types";
 import { Title } from "@/shared/ui";
 
@@ -20,12 +21,7 @@ export const Invitation: FC<TInvitation> = ({ guestsNum, className }) => {
 
 	const content = useMemo(() => {
 		if (isLoading) {
-			return (
-				<p>
-					<svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
-					Загрузка...
-				</p>
-			);
+			return <img src={loader} alt="loader" className="w-4/5 mx-auto" />;
 		}
 
 		if (isError) {
@@ -59,5 +55,9 @@ export const Invitation: FC<TInvitation> = ({ guestsNum, className }) => {
 		}
 	}, [data, error?.message, isError, isLoading]);
 
-	return <div className={classNames("bg-white text-black", className)}>{content}</div>;
+	return (
+		<div className={classNames("bg-white text-black", className, { "!pb-6": isLoading })}>
+			{content}
+		</div>
+	);
 };

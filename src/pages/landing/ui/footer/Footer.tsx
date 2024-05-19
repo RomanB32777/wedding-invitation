@@ -32,7 +32,7 @@ export const Footer: FC = () => {
 				setDiff(defaultDiff);
 				clearInterval(interval);
 
-				// confetti here
+				// TODO confetti here
 
 				return;
 			}
@@ -42,14 +42,18 @@ export const Footer: FC = () => {
 			const minutesDiff = weddingDate.diff(currentDate, "minute") % 60;
 			const secondsDiff = weddingDate.diff(currentDate, "second") % 60;
 
+			const withSuffix = true;
+
 			setDiff({
-				days: daysDiff ? dayjs.duration(daysDiff, "day").humanize(true) : defaultDiff.days,
-				hours: hoursDiff ? dayjs.duration(hoursDiff, "hour").humanize(true) : defaultDiff.hours,
+				days: daysDiff ? dayjs.duration(daysDiff, "day").humanize(withSuffix) : defaultDiff.days,
+				hours: hoursDiff
+					? dayjs.duration(hoursDiff, "hour").humanize(withSuffix)
+					: defaultDiff.hours,
 				minutes: minutesDiff
-					? dayjs.duration(minutesDiff, "minute").humanize(true)
+					? dayjs.duration(minutesDiff, "minute").humanize(withSuffix)
 					: defaultDiff.minutes,
 				seconds: secondsDiff
-					? dayjs.duration(secondsDiff, "second").humanize(true)
+					? dayjs.duration(secondsDiff, "second").humanize(withSuffix)
 					: defaultDiff.seconds,
 			});
 		}, 1000);
@@ -84,11 +88,11 @@ export const Footer: FC = () => {
 				/>
 			</div>
 
-			<div className="pt-32 pb-10">
+			<div className="pt-32 pb-8">
 				<Title
 					text="Ваши Дима и Настя"
 					style="white"
-					className="relative text-center z-10 first-letter:!text-9xl first-line:!text-3xl"
+					className="relative text-center z-10 -top-2 first-letter:!text-9xl first-line:!text-3xl"
 				/>
 			</div>
 		</>
