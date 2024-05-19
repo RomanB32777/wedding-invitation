@@ -43,7 +43,11 @@ export const Invitation: FC<TInvitation> = ({ guestsNum, className }) => {
 		if (data) {
 			return (
 				<motion.div {...baseMotionProps}>
-					<MTitle text={data.title || ""} variants={fadeInDirectionAnimation} />
+					<MTitle
+						text={data.title || ""}
+						variants={fadeInDirectionAnimation}
+						className="indent-2"
+					/>
 
 					<div className="font-light text-base flex flex-col gap-y-3">
 						<motion.p

@@ -44,7 +44,12 @@ const steps: IStep[] = [
 export const Plan: FC<TComponentWithClassName> = ({ className }) => (
 	<div className={classNames("text-white", className)}>
 		<motion.div {...baseMotionProps}>
-			<MTitle text="План дня" type="white" variants={fadeInDirectionAnimation} />
+			<MTitle
+				text="План дня"
+				type="white"
+				className="indent-2"
+				variants={fadeInDirectionAnimation}
+			/>
 		</motion.div>
 
 		<div className="[&>:first-child]:pt-0 [&>:last-child]:pb-0">

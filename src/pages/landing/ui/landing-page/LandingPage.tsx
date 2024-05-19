@@ -15,7 +15,7 @@ export const LandingPage: FC = () => {
 	const guestsNum = new URLSearchParams(window.location.search).get("row");
 
 	return (
-		<div className="max-w-screen-sm mx-auto bg-primary font-roboto">
+		<div className="max-w-screen-sm mx-auto bg-primary font-roboto overflow-hidden">
 			<Header />
 			<Invitation guestsNum={guestsNum} className={wrapperClasses} />
 			<Plan className={wrapperClasses} />

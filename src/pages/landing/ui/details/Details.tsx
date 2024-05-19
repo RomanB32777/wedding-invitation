@@ -25,8 +25,8 @@ const colors: Record<"Gentlemen" | "Ladies", TColor> = {
 
 export const Details: FC<TComponentWithClassName> = ({ className }) => (
 	<div className={classNames("text-white", className)}>
-		<motion.div {...baseMotionProps} variants={fadeInDirectionAnimation}>
-			<MTitle text="Детали" type="white" />
+		<motion.div {...baseMotionProps}>
+			<MTitle text="Детали" type="white" className="indent-2" variants={fadeInDirectionAnimation} />
 
 			<motion.p
 				variants={fadeInDirectionAnimation}

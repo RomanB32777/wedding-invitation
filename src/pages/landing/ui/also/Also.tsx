@@ -8,7 +8,7 @@ import { MTitle } from "@/shared/ui";
 
 export const Also: FC<TComponentWithClassName> = ({ className }) => (
 	<motion.div {...baseMotionProps} className={classNames("bg-white text-black", className)}>
-		<MTitle text="А еще..." variants={fadeInDirectionAnimation} />
+		<MTitle text="А еще..." className="indent-2" variants={fadeInDirectionAnimation} />
 
 		<div className="flex flex-col gap-y-3 text-base">
 			<motion.p

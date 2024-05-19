@@ -60,7 +60,12 @@ export const ReplyForm: FC<TReplyForm> = ({ guestsNum, className }) => {
 	return (
 		<div className={classNames("text-white", className)}>
 			<motion.div {...baseMotionProps}>
-				<MTitle text="Анкета" type="white" variants={fadeInDirectionAnimation} />
+				<MTitle
+					text="Анкета"
+					type="white"
+					className="indent-2"
+					variants={fadeInDirectionAnimation}
+				/>
 
 				<motion.p
 					variants={fadeInDirectionAnimation}
@@ -110,6 +115,7 @@ export const ReplyForm: FC<TReplyForm> = ({ guestsNum, className }) => {
 				<MTitle
 					text="Контакты"
 					type="white"
+					className="indent-2"
 					variants={fadeInDirectionAnimation}
 					custom={{ delay: 4 } as IDirectionAnimation}
 				/>

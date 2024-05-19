@@ -42,7 +42,7 @@ export const Header: FC = () => {
 					custom={1}
 					className={classNames(
 						styles.date,
-						"relative font-oranienbaum text-primary-lightest text-center"
+						"relative font-oranienbaum text-primary-lightest text-center text-lg"
 					)}
 				>
 					{getDayjsWeddingDate().format("DD.MM.YYYY")}

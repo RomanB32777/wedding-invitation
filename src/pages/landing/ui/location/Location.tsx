@@ -10,7 +10,7 @@ import { Button, MTitle } from "@/shared/ui";
 export const Location: FC<TComponentWithClassName> = ({ className }) => (
 	<div className={classNames("bg-white text-black", className)}>
 		<motion.div {...baseMotionProps}>
-			<MTitle variants={fadeInDirectionAnimation} text="Локация" />
+			<MTitle variants={fadeInDirectionAnimation} text="Локация" className="indent-2" />
 
 			<motion.p
 				variants={fadeInDirectionAnimation}
