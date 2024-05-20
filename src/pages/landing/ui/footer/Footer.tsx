@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 
 import footerImg from "@/shared/assets/images/footer.png";
 import { baseMotionProps, fadeInAnimation, fadeInDirectionAnimation } from "@/shared/constants";
@@ -15,6 +15,8 @@ interface IWeddingDiff {
 	seconds: string;
 }
 
+const weddingDate = getDayjsWeddingDate();
+
 const defaultDiff: IWeddingDiff = {
 	days: relativeTimeWithPlural(0, false, "dd"),
 	hours: relativeTimeWithPlural(0, false, "hh"),
@@ -23,46 +25,49 @@ const defaultDiff: IWeddingDiff = {
 };
 
 export const Footer: FC = () => {
-	const [diff, setDiff] = useState<IWeddingDiff>(defaultDiff);
+	const [diff, setDiff] = useState(weddingDate.isAfter() ? weddingDate.diff() : 0);
 
 	useEffect(() => {
-		const weddingDate = getDayjsWeddingDate();
-
 		const interval = setInterval(() => {
-			const currentDate = dayjs();
+			setDiff((prev) => {
+				if (Math.floor(prev / 1000) <= 0) {
+					// TODO confetti here
 
-			if (!currentDate.isBefore(weddingDate)) {
-				setDiff(defaultDiff);
-				clearInterval(interval);
+					clearInterval(interval);
 
-				// TODO confetti here
+					return 0;
+				}
 
-				return;
-			}
-
-			const daysDiff = weddingDate.diff(currentDate, "day");
-			const hoursDiff = weddingDate.diff(currentDate, "hour") % 24;
-			const minutesDiff = weddingDate.diff(currentDate, "minute") % 60;
-			const secondsDiff = weddingDate.diff(currentDate, "second") % 60;
-
-			const withSuffix = true;
-
-			setDiff({
-				days: daysDiff ? dayjs.duration(daysDiff, "day").humanize(withSuffix) : defaultDiff.days,
-				hours: hoursDiff
-					? dayjs.duration(hoursDiff, "hour").humanize(withSuffix)
-					: defaultDiff.hours,
-				minutes: minutesDiff
-					? dayjs.duration(minutesDiff, "minute").humanize(withSuffix)
-					: defaultDiff.minutes,
-				seconds: secondsDiff
-					? dayjs.duration(secondsDiff, "second").humanize(withSuffix)
-					: defaultDiff.seconds,
+				return prev - 1000;
 			});
 		}, 1000);
 
 		return () => clearInterval(interval);
 	}, []);
+
+	const diffValues: IWeddingDiff = useMemo(() => {
+		const withSuffix = true;
+
+		const daysDiff = dayjs.duration(diff).asDays();
+		const hoursDiff = dayjs.duration(diff).asHours() % 24;
+		const minutesDiff = dayjs.duration(diff).asMinutes() % 60;
+		const secondsDiff = dayjs.duration(diff).asSeconds() % 60;
+
+		return {
+			days: Math.floor(daysDiff)
+				? dayjs.duration(daysDiff, "day").humanize(withSuffix)
+				: defaultDiff.days,
+			hours: Math.floor(hoursDiff)
+				? dayjs.duration(hoursDiff, "hour").humanize(withSuffix)
+				: defaultDiff.hours,
+			minutes: Math.floor(minutesDiff)
+				? dayjs.duration(minutesDiff, "minute").humanize(withSuffix)
+				: defaultDiff.minutes,
+			seconds: Math.floor(secondsDiff)
+				? dayjs.duration(secondsDiff, "second").humanize(withSuffix)
+				: defaultDiff.seconds,
+		};
+	}, [diff]);
 
 	return (
 		<>
@@ -75,23 +80,22 @@ export const Footer: FC = () => {
 						custom={2}
 						className="flex divide-x divide-primary-dark text-primary-dark"
 					>
-						{diff &&
-							Object.values(diff).map((item, index) => {
-								// TODO без удаления через тут можно ли обойти, например через конфигурацию dayjs
-								const [value, text] = (item as string).replace("через ", "").split(" ");
+						{Object.values(diffValues).map((item, index) => {
+							// TODO без удаления через тут можно ли обойти, например через конфигурацию dayjs
+							const [value, text] = (item as string).replace("через ", "").split(" ");
 
-								return (
-									<motion.div
-										variants={fadeInDirectionAnimation}
-										custom={{ axis: "y", delay: 3 + index } as IDirectionAnimation}
-										className="flex-1"
-										key={index}
-									>
-										<p className="font-oranienbaum text-5xl">{value}</p>
-										<p className="font-light text-base">{text}</p>
-									</motion.div>
-								);
-							})}
+							return (
+								<motion.div
+									variants={fadeInDirectionAnimation}
+									custom={{ axis: "y", delay: 3 + index } as IDirectionAnimation}
+									className="flex-1"
+									key={index}
+								>
+									<p className="font-oranienbaum text-5xl">{value}</p>
+									<p className="font-light text-base">{text}</p>
+								</motion.div>
+							);
+						})}
 					</motion.div>
 
 					<motion.img
