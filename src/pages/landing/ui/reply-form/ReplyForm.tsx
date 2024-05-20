@@ -117,12 +117,12 @@ export const ReplyForm: FC<TReplyForm> = ({ guestsNum, className }) => {
 					type="white"
 					className="indent-2"
 					variants={fadeInDirectionAnimation}
-					custom={{ delay: 4 } as IDirectionAnimation}
+					custom={{ delay: 3 } as IDirectionAnimation}
 				/>
 
 				<motion.div
 					variants={fadeInDirectionAnimation}
-					custom={{ delay: 5 } as IDirectionAnimation}
+					custom={{ delay: 4 } as IDirectionAnimation}
 					className="flex flex-col gap-y-3 text-base"
 				>
 					<p className="font-light">По всем вопросам можно обращаться к нашему организатору</p>
