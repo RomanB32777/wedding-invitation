@@ -48,22 +48,18 @@ export const Footer: FC = () => {
 	const diffValues: IWeddingDiff = useMemo(() => {
 		const withSuffix = true;
 
-		const daysDiff = dayjs.duration(diff).asDays();
-		const hoursDiff = dayjs.duration(diff).asHours() % 24;
-		const minutesDiff = dayjs.duration(diff).asMinutes() % 60;
-		const secondsDiff = dayjs.duration(diff).asSeconds() % 60;
+		const daysDiff = Math.floor(dayjs.duration(diff).asDays());
+		const hoursDiff = Math.floor(dayjs.duration(diff).asHours() % 24);
+		const minutesDiff = Math.floor(dayjs.duration(diff).asMinutes() % 60);
+		const secondsDiff = Math.floor(dayjs.duration(diff).asSeconds() % 60);
 
 		return {
-			days: Math.floor(daysDiff)
-				? dayjs.duration(daysDiff, "day").humanize(withSuffix)
-				: defaultDiff.days,
-			hours: Math.floor(hoursDiff)
-				? dayjs.duration(hoursDiff, "hour").humanize(withSuffix)
-				: defaultDiff.hours,
-			minutes: Math.floor(minutesDiff)
+			days: daysDiff ? dayjs.duration(daysDiff, "day").humanize(withSuffix) : defaultDiff.days,
+			hours: hoursDiff ? dayjs.duration(hoursDiff, "hour").humanize(withSuffix) : defaultDiff.hours,
+			minutes: minutesDiff
 				? dayjs.duration(minutesDiff, "minute").humanize(withSuffix)
 				: defaultDiff.minutes,
-			seconds: Math.floor(secondsDiff)
+			seconds: secondsDiff
 				? dayjs.duration(secondsDiff, "second").humanize(withSuffix)
 				: defaultDiff.seconds,
 		};
