@@ -6,11 +6,9 @@ const queryClient = new QueryClient();
 
 const App = () => {
 	return (
-		<>
-			<QueryClientProvider client={queryClient}>
-				<LandingPage />
-			</QueryClientProvider>
-		</>
+		<QueryClientProvider client={queryClient}>
+			<LandingPage />
+		</QueryClientProvider>
 	);
 };
 
